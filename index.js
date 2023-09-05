@@ -41,7 +41,7 @@ function whoWins(ComputerChoice, playerChoice) {
 // a function that counters each player score.
 
 function scoreCounter(result) {
-    if (result === 'you lose') {
+    if (result === 'you lose') {                  
         return computerscore += 1;
     }
     else if (result === 'you win') {
@@ -52,20 +52,12 @@ function scoreCounter(result) {
     }
 }
 
-    const results = document.getElementById('#results');
-    const scoreScreen = document.querySelector('score');
-    
-    results.appendChild(scoreScreen);
-
-    const computerscoreScreen = document.querySelector('computerScore');
-    computerscoreScreen.textContent = `computer score: ${computerscore}`;
-
-    const playerscoreScreen = document.querySelector('playerScore');
-    playerscoreScreen.textContent = `player score: ${playerscore}`;
-
-    let story = document.querySelector('story');
- 
-    const playAgain = document.querySelector('playAgain');
+    const results = document.getElementById('results');
+    const scoreScreen = document.querySelector('.score');
+    const computerscoreScreen = document.querySelector('.computerScore');
+    const playerscoreScreen = document.querySelector('.playerScore');
+    let story = document.querySelector('.story');
+    const playAgain = document.querySelector('.playAgain');
     const playAgainYes = document.getElementById('playAgainYes');
     const playAgainNo = document.getElementById('playAgainNo');
 
@@ -74,21 +66,17 @@ function scoreCounter(result) {
 
 function game() {
 
-    while (playerscore < 3 && computerscore < 3) { // For now, remove the logic that plays exactly five rounds.
-
-    function getComputerSelection(){
-        return options[getRandomNumber()];
-    }
+    //while (playerscore < 3 && computerscore < 3) { // For now, remove the logic that plays exactly five rounds.
 
     buttons = Array.from(document.querySelectorAll('button'));
 
     buttons.forEach(button => button.addEventListener('click', function(e){
-    scoreCounter(story.textContent = whoWins(getComputerSelection(), e.target.classList.toString().toLowerCase()));
+    scoreCounter(story.textContent = whoWins(options[getRandomNumber()], e.target.classList.toString().toLowerCase()));
     computerscoreScreen.textContent = `computer score: ${computerscore}`;
     playerscoreScreen.textContent = `player score: ${playerscore}`;
     }));    
 
-    }
+    
 
     if (playerscore === 3 || computerscore === 3) {
         if (playerscore === 3) {
@@ -111,7 +99,7 @@ function game() {
             story.textContent = 'jaa';
         }        
     }
-
 }
+
 
 game();
