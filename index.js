@@ -1,3 +1,5 @@
+console.log('Lets play Rock, Paper, Scissor');
+
 let playerscore = 0;
 let computerscore = 0;
 let options = ['rock', 'paper', 'scissor']
@@ -12,29 +14,26 @@ let options = ['rock', 'paper', 'scissor']
 
 function whoWins(ComputerChoice, playerChoice) {
 
-    if (ComputerChoice === 'rock' && playerChoice.toLowerCase() === 'scissor') {
+    if (ComputerChoice === 'rock' && playerChoice === 'scissor') {
         return ('you lose')
     } 
-    else if (ComputerChoice === 'rock' && playerChoice.toLowerCase() === 'paper'){
+    else if (ComputerChoice === 'rock' && playerChoice === 'paper'){
         return ('you win')
     }
-    else if (ComputerChoice === 'paper' && playerChoice.toLowerCase() === 'rock'){
+    else if (ComputerChoice === 'paper' && playerChoice === 'rock'){
         return ('you lose')
     }
-    else if (ComputerChoice === 'paper' && playerChoice.toLowerCase() === 'scissor'){
+    else if (ComputerChoice === 'paper' && playerChoice === 'scissor'){
         return ('you win')
     }
-    else if (ComputerChoice === 'scissor' && playerChoice.toLowerCase() === 'paper'){
+    else if (ComputerChoice === 'scissor' && playerChoice === 'paper'){
         return ('you lose')
     }
-    else if (ComputerChoice === 'scissor' && playerChoice.toLowerCase() === 'rock'){
+    else if (ComputerChoice === 'scissor' && playerChoice === 'rock'){
         return ('you win')
-    }
-    else if (ComputerChoice.toLowerCase === playerChoice.toLowerCase) {
-        return ('its a tie')
     }
     else {
-        return ('you can just write rock or paper or scissor, try again')
+        return ('its a tie')
     }
 }
 
@@ -48,7 +47,7 @@ function scoreCounter(result) {
        return playerscore += 1;
     }
     else {
-        return('it is a tie');
+        return;
     }
 }
 
@@ -56,22 +55,44 @@ function scoreCounter(result) {
 
 function game() {
 
-    while (playerscore < 3 && computerscore < 3) {
+    // while (playerscore < 3 && computerscore < 3) { // For now, remove the logic that plays exactly five rounds.
 
-    let ComputerSelection = options[getRandomNumber()];
-    let playerSelection = prompt('enter rock, paper or scissor');
-    scoreCounter(whoWins(ComputerSelection, playerSelection));    
-    console.log(whoWins(ComputerSelection, playerSelection));
-    console.log('computer score: ' + (computerscore))
-    console.log('your score: ' + (playerscore))
-    console.log(' ')
+    function getComputerSelection(){
+        return options[getRandomNumber()];
     }
+
+    buttons = Array.from(document.querySelectorAll('button'));
+    buttons.forEach(button => button.addEventListener('click', function(e){
+
+    scoreCounter(story.textContent = whoWins(getComputerSelection(), e.target.classList.toString().toLowerCase()));
+
+    computerscoreScreen.textContent = `computer score: ${computerscore}`;
+    playerscoreScreen.textContent = `player score: ${playerscore}`;
+    }));    
+
+    const results = document.querySelector('#results');
+    const scoreScreen = document.createElement('div');
+    scoreScreen.classList.add('scores')
+    results.appendChild(scoreScreen);
+
+    const computerscoreScreen = document.createElement('div');
+    computerscoreScreen.textContent = `computer score: ${computerscore}`;
+    scoreScreen.appendChild(computerscoreScreen);
+
+    const playerscoreScreen = document.createElement('div');
+    playerscoreScreen.textContent = `player score: ${playerscore}`;
+    scoreScreen.appendChild(playerscoreScreen);
+    let story = document.createElement('div');
+    story.classList.add('story')
+    results.appendChild(story);
+ 
+
 
     if (playerscore == 3 || computerscore == 3) {
         if (playerscore === 3) {
-            console.log('You have won');
+            story.textContent = 'You have won';
         } else {
-            console.log('The computer has won');
+            story.textContent = 'The computer has won';
         }
         
         let playagain = prompt('Do you want to play again? (yes/no)').toLowerCase();
@@ -79,15 +100,12 @@ function game() {
         if (playagain === 'yes') {
             playerscore = 0;
             computerscore = 0;
-            console.log('');
-            console.log("let's play again!");
-            console.log('');
-            console.log('computer score: ' + (computerscore));
-            console.log('your score: ' + (playerscore));
-            console.log('');
+            story.textContent = "let's play again!" ;
+            computerscoreScreen.textContent = `computer score: ${computerscore}`;
+            playerscoreScreen.textContent = `player score: ${playerscore}`;
             game();
         } else {
-            return 'jaa';
+            story.textContent = 'jaa';
         }        
     }
 
