@@ -52,6 +52,27 @@ function scoreCounter(result) {
     }
 }
 
+function gameOver(){
+    if (playerscore === 3 || computerscore === 3) {
+        if (playerscore === 3) {
+            story.textContent = 'You have won';
+        } else {
+            story.textContent = 'The computer has won';
+        }
+        playAgain.style.display = 'block';
+        playAgainYes.addEventListener('click', function (){
+            playerscore = 0;
+            computerscore = 0;
+            computerscoreScreen.textContent = `computer score: ${computerscore}`;
+            playerscoreScreen.textContent = `player score: ${playerscore}`;
+            playAgain.style.display = 'none';
+
+            game();
+        });
+    }
+    else {return}
+}
+
     const results = document.getElementById('results');
     const scoreScreen = document.querySelector('.score');
     const computerscoreScreen = document.querySelector('.computerScore');
@@ -60,6 +81,7 @@ function scoreCounter(result) {
     const playAgain = document.querySelector('.playAgain');
     const playAgainYes = document.getElementById('playAgainYes');
     const playAgainNo = document.getElementById('playAgainNo');
+    buttons = Array.from(document.querySelectorAll('button'));
 
 
 // a function that runs the others functions together with a condition.
@@ -68,12 +90,11 @@ function game() {
 
     //while (playerscore < 3 && computerscore < 3) { // For now, remove the logic that plays exactly five rounds.
 
-    buttons = Array.from(document.querySelectorAll('button'));
-
     buttons.forEach(button => button.addEventListener('click', function(e){
     scoreCounter(story.textContent = whoWins(options[getRandomNumber()], e.target.classList.toString().toLowerCase()));
     computerscoreScreen.textContent = `computer score: ${computerscore}`;
     playerscoreScreen.textContent = `player score: ${playerscore}`;
+    gameOver();
     }));    
 
     
