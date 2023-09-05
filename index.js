@@ -1,4 +1,5 @@
-console.log('Lets play Rock, Paper, Scissor');
+const title = document.getElementById('title');
+title.textContent = 'Lets play Rock, Paper, Scissor';
 
 let playerscore = 0;
 let computerscore = 0;
@@ -6,9 +7,9 @@ let options = ['rock', 'paper', 'scissor']
 
 // a function that will randomly return either ‘Rock’, ‘Paper’ or ‘Scissors'.
 
-    function getRandomNumber() {
-        return Math.floor(Math.random() * 3);
-    }  
+function getRandomNumber() {
+    return Math.floor(Math.random() * 3);
+    }          
 
 // a function that determines and says who wins.
 
@@ -51,53 +52,55 @@ function scoreCounter(result) {
     }
 }
 
+    const results = document.getElementById('#results');
+    const scoreScreen = document.querySelector('score');
+    
+    results.appendChild(scoreScreen);
+
+    const computerscoreScreen = document.querySelector('computerScore');
+    computerscoreScreen.textContent = `computer score: ${computerscore}`;
+
+    const playerscoreScreen = document.querySelector('playerScore');
+    playerscoreScreen.textContent = `player score: ${playerscore}`;
+
+    let story = document.querySelector('story');
+ 
+    const playAgain = document.querySelector('playAgain');
+    const playAgainYes = document.getElementById('playAgainYes');
+    const playAgainNo = document.getElementById('playAgainNo');
+
+
 // a function that runs the others functions together with a condition.
 
 function game() {
 
-    // while (playerscore < 3 && computerscore < 3) { // For now, remove the logic that plays exactly five rounds.
+    while (playerscore < 3 && computerscore < 3) { // For now, remove the logic that plays exactly five rounds.
 
     function getComputerSelection(){
         return options[getRandomNumber()];
     }
 
     buttons = Array.from(document.querySelectorAll('button'));
+
     buttons.forEach(button => button.addEventListener('click', function(e){
-
     scoreCounter(story.textContent = whoWins(getComputerSelection(), e.target.classList.toString().toLowerCase()));
-
     computerscoreScreen.textContent = `computer score: ${computerscore}`;
     playerscoreScreen.textContent = `player score: ${playerscore}`;
     }));    
 
-    const results = document.querySelector('#results');
-    const scoreScreen = document.createElement('div');
-    scoreScreen.classList.add('scores')
-    results.appendChild(scoreScreen);
+    }
 
-    const computerscoreScreen = document.createElement('div');
-    computerscoreScreen.textContent = `computer score: ${computerscore}`;
-    scoreScreen.appendChild(computerscoreScreen);
-
-    const playerscoreScreen = document.createElement('div');
-    playerscoreScreen.textContent = `player score: ${playerscore}`;
-    scoreScreen.appendChild(playerscoreScreen);
-    let story = document.createElement('div');
-    story.classList.add('story')
-    results.appendChild(story);
- 
-
-
-    if (playerscore == 3 || computerscore == 3) {
+    if (playerscore === 3 || computerscore === 3) {
         if (playerscore === 3) {
             story.textContent = 'You have won';
         } else {
             story.textContent = 'The computer has won';
         }
         
-        let playagain = prompt('Do you want to play again? (yes/no)').toLowerCase();
+
+        // playAgainPara.textContent = 'Do you want to play again?';
         
-        if (playagain === 'yes') {
+        if (playAgainYes) {
             playerscore = 0;
             computerscore = 0;
             story.textContent = "let's play again!" ;
@@ -111,4 +114,4 @@ function game() {
 
 }
 
-console.log(game())
+game();
