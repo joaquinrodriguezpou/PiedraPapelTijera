@@ -1,5 +1,14 @@
 const title = document.getElementById('title');
-title.textContent = 'Lets play Rock, Paper, Scissor';
+const results = document.getElementById('results');
+const scoreScreen = document.querySelector('.score');
+const computerscoreScreen = document.querySelector('.computerScore');
+const playerscoreScreen = document.querySelector('.playerScore');
+let story = document.querySelector('.story');
+story.textContent = "let's play";
+const playAgain = document.querySelector('.playAgain');
+const playAgainYes = document.getElementById('playAgainYes');
+const playAgainNo = document.getElementById('playAgainNo');
+buttons = Array.from(document.querySelectorAll('.Rock, .Paper, .Scissor'));
 
 let playerscore = 0;
 let computerscore = 0;
@@ -54,6 +63,7 @@ function scoreCounter(result) {
 
 function gameOver(){
     if (playerscore === 3 || computerscore === 3) {
+        buttons.forEach(button => button.disabled = true);
         if (playerscore === 3) {
             story.textContent = 'You have won';
         } else {
@@ -61,66 +71,23 @@ function gameOver(){
         }
         playAgain.style.display = 'block';
         playAgainYes.addEventListener('click', function (){
+            buttons.forEach(button => button.disabled = false);
             playerscore = 0;
             computerscore = 0;
             computerscoreScreen.textContent = `computer score: ${computerscore}`;
             playerscoreScreen.textContent = `player score: ${playerscore}`;
             playAgain.style.display = 'none';
-
+            story.textContent = "let's play again!";
             game();
         });
     }
     else {return}
 }
 
-    const results = document.getElementById('results');
-    const scoreScreen = document.querySelector('.score');
-    const computerscoreScreen = document.querySelector('.computerScore');
-    const playerscoreScreen = document.querySelector('.playerScore');
-    let story = document.querySelector('.story');
-    const playAgain = document.querySelector('.playAgain');
-    const playAgainYes = document.getElementById('playAgainYes');
-    const playAgainNo = document.getElementById('playAgainNo');
-    buttons = Array.from(document.querySelectorAll('button'));
-
-
-// a function that runs the others functions together with a condition.
-
-function game() {
-
-    //while (playerscore < 3 && computerscore < 3) { // For now, remove the logic that plays exactly five rounds.
-
-    buttons.forEach(button => button.addEventListener('click', function(e){
-    scoreCounter(story.textContent = whoWins(options[getRandomNumber()], e.target.classList.toString().toLowerCase()));
-    computerscoreScreen.textContent = `computer score: ${computerscore}`;
-    playerscoreScreen.textContent = `player score: ${playerscore}`;
-    gameOver();
-    }));    
-
-    
-
-    if (playerscore === 3 || computerscore === 3) {
-        if (playerscore === 3) {
-            story.textContent = 'You have won';
-        } else {
-            story.textContent = 'The computer has won';
-        }
-        
-
-        // playAgainPara.textContent = 'Do you want to play again?';
-        
-        if (playAgainYes) {
-            playerscore = 0;
-            computerscore = 0;
-            story.textContent = "let's play again!" ;
-            computerscoreScreen.textContent = `computer score: ${computerscore}`;
-            playerscoreScreen.textContent = `player score: ${playerscore}`;
-            game();
-        } else {
-            story.textContent = 'jaa';
-        }        
-    }
-}
-
-
-game();
+// an event listener that runs the others functions together.
+buttons.forEach(button => button.addEventListener('click', function(e){
+        scoreCounter(story.textContent = whoWins(options[getRandomNumber()], e.target.classList.toString().toLowerCase()));
+        computerscoreScreen.textContent = `computer score: ${computerscore}`;
+        playerscoreScreen.textContent = `player score: ${playerscore}`;
+        gameOver(); 
+        }));   
